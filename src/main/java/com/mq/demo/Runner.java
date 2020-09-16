@@ -1,5 +1,6 @@
 package com.mq.demo;
 
+import java.sql.Timestamp;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -19,9 +20,10 @@ public class Runner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.println("Sending message...");
+        System.out.println("Sending message... @" + new Timestamp(System.currentTimeMillis()));
         rabbitTemplate.convertAndSend(RabbitmqApplication.topicExchangeName, "foo.bar.baz", "Hello from RabbitMQ!");
         receiver.getLatch().await(10000, TimeUnit.MILLISECONDS);
+        System.out.println("message received by Receiver... @" + new Timestamp(System.currentTimeMillis()));
     }
 
 }
