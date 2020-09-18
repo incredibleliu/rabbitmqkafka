@@ -1,5 +1,9 @@
 package com.mq.demo;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
@@ -14,10 +18,16 @@ public class MyEventListener implements MessageListener {
         TextMessage textMessage = (TextMessage) message;
         String stringMessage = textMessage.getText();
         System.out.println("onMessage receive: " + stringMessage  );
-        //do something with your message from queue
+
+        XmlMapper xmlMapper = new XmlMapper();
+        JsonNode node = xmlMapper.readTree(stringMessage.getBytes());
+        ObjectMapper jsonMapper = new ObjectMapper();
+        String json = jsonMapper.writeValueAsString(node);
+        System.out.println("json: " + json);
+
       }
-    } catch (JMSException e) {
-      //catch error
+    } catch (Exception e) {
+      e.printStackTrace();
     }
   }
 }

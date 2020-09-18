@@ -27,6 +27,33 @@ public class MqspringApplication {
 
     private static final String queueName = "DEV.QUEUE.1";
 
+    private static final String xml = "<?xml version='1.0' standalone='yes'?>\n" +
+            "<movies>\n" +
+            " <movie>\n" +
+            "  <title>PHP: Behind the Parser</title>\n" +
+            "  <characters>\n" +
+            "   <character>\n" +
+            "    <name>Ms. Coder</name>\n" +
+            "    <actor>Onlivia Actora</actor>\n" +
+            "   </character>\n" +
+            "   <character>\n" +
+            "    <name>Mr. Coder</name>\n" +
+            "    <actor>El Act&#211;r</actor>\n" +
+            "   </character>\n" +
+            "  </characters>\n" +
+            "  <plot>\n" +
+            "   So, this language. It's like, a programming language. Or is it a\n" +
+            "   scripting language? All is revealed in this thrilling horror spoof\n" +
+            "   of a documentary.\n" +
+            "  </plot>\n" +
+            "  <great-lines>\n" +
+            "   <line>PHP solves all my web problems</line>\n" +
+            "  </great-lines>\n" +
+            "  <rating type=\"thumbs\">7</rating>\n" +
+            "  <rating type=\"stars\">5</rating>\n" +
+            " </movie>\n" +
+            "</movies>";
+
     @Value("${ibm.mq.queueManager}")
     private String qm;
 
@@ -98,7 +125,7 @@ public class MqspringApplication {
     @GetMapping("send")
     String send(){
         try{
-            jmsTemplate.convertAndSend(queueName, "Hello World!");
+            jmsTemplate.convertAndSend(queueName, xml);
             return "OK";
         }catch(JmsException ex){
             ex.printStackTrace();
