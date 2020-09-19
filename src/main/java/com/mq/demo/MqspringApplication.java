@@ -3,6 +3,8 @@ package com.mq.demo;
 import com.ibm.mq.jms.MQConnectionFactory;
 import com.ibm.mq.jms.MQQueueConnectionFactory;
 import com.ibm.msg.client.wmq.WMQConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -24,6 +26,9 @@ import javax.jms.JMSException;
 @RestController
 @EnableJms
 public class MqspringApplication {
+
+    private static final Logger log
+            = LoggerFactory.getLogger(MqspringApplication.class);
 
     private static final String queueName = "DEV.QUEUE.1";
 
@@ -77,6 +82,8 @@ public class MqspringApplication {
      private JmsTemplate jmsTemplate;
 
      public static void main(String[] args) {
+
+         log.info("MqspringApplication starts...");
          SpringApplication.run(MqspringApplication.class, args);
      }
 
@@ -120,7 +127,6 @@ public class MqspringApplication {
         container.setMessageListener(new MyEventListener());
         return container;
     }
-
 
     @GetMapping("send")
     String send(){
