@@ -1,8 +1,6 @@
 package com.mq.demo;
 
 import com.ibm.mq.jms.MQConnectionFactory;
-import com.ibm.mq.jms.MQQueueConnectionFactory;
-import com.ibm.msg.client.wmq.WMQConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,9 +75,11 @@ public class MqspringApplication {
     @Value("${ibm.mq.password}")
     private String password;
 
-
     @Autowired
      private JmsTemplate jmsTemplate;
+
+    @Autowired
+    MessageProducer messageProducer;
 
      public static void main(String[] args) {
 
@@ -124,7 +124,9 @@ public class MqspringApplication {
         container.setAutoStartup(true);
         container.setConnectionFactory(userCredentialsConnectionFactoryAdapter(mqConnectionFactory()));
         container.setDestinationName(queueName);
-        container.setMessageListener(new MyEventListener());
+        //container.setMessageListener(new MqListener());
+        log.info("messageProducer = {}", messageProducer);
+        container.setMessageListener(new MqListener(messageProducer));
         return container;
     }
 
