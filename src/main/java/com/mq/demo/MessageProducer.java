@@ -33,6 +33,9 @@ public class MessageProducer {
 
     public void sendMessage(String message) {
 
+
+//        throw(new RuntimeException("for test"));
+
       log.info("kafkaTemplate = {}", kafkaTemplate);
       ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send(topicName, message);
 
@@ -49,6 +52,7 @@ public class MessageProducer {
           System.out.println("Unable to send message=[" + message + "] due to : " + ex.getMessage());
         }
       });
+
     }
 
 //    public void sendMessageToPartition(String message, int partition) {

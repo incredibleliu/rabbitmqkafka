@@ -17,6 +17,7 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
+import javax.transaction.Transactional;
 
 @Component
 public class MqListener implements MessageListener {
@@ -37,6 +38,7 @@ public class MqListener implements MessageListener {
 //  }
 
   @Override
+  @Transactional
   public void onMessage(Message message) {
     try {
       if (message instanceof TextMessage) {
