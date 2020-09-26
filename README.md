@@ -19,3 +19,11 @@ kafka-topics --zookeeper localhost:2181 --list
 
 
 kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic rabbitmqkafka --from-beginning --max-messages 10
+
+xml->avro
+1. https://github.com/elodina/xml-avro
+   SimpleConverter good, use this
+2. https://www.confluent.io/blog/kafka-connect-single-message-transformation-tutorial-with-examples/
+   NA
+3. https://github.com/mit-ll/xml-avro-converter
+   complicated, hard to implement

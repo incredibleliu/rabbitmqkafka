@@ -175,6 +175,24 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.apache.avro</groupId>
+			<artifactId>avro</artifactId>
+			<version>1.10.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>xerces</groupId>
+			<artifactId>xercesImpl</artifactId>
+			<version>2.12.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.confluent</groupId>
+			<artifactId>kafka-avro-serializer</artifactId>
+			<version>5.3.0</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
@@ -201,15 +219,19 @@
 		</plugins>
 	</build>
 
-	<!--
 	<repositories>
 		<repository>
 			<id>repository.jboss.org-public</id>
 			<name>JBoss.org Maven repository</name>
 			<url>https://repository.jboss.org/nexus/content/groups/public</url>
 		</repository>
+
+		<repository>
+			<id>confluent</id>
+			<url>http://packages.confluent.io/maven/</url>
+		</repository>
 	</repositories>
-	-->
+
 
 
 </project>

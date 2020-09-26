@@ -1,6 +1,8 @@
 package com.mq.demo;
 
 import com.ibm.mq.jms.MQConnectionFactory;
+import com.mq.demo.producer.AvroProducer;
+import com.mq.demo.producer.MessageProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,15 +20,16 @@ import org.springframework.jms.listener.DefaultMessageListenerContainer;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import javax.jms.JMSException;
 
 @SpringBootApplication
 @RestController
 @EnableJms
-public class MqspringApplication {
+public class MQSpringApplication {
 
     private static final Logger log
-            = LoggerFactory.getLogger(MqspringApplication.class);
+            = LoggerFactory.getLogger(MQSpringApplication.class);
 
     private static final String queueName = "DEV.QUEUE.1";
 
@@ -81,10 +84,13 @@ public class MqspringApplication {
     @Autowired
     MessageProducer messageProducer;
 
+    @Autowired
+    AvroProducer avroProducer;
+
      public static void main(String[] args) {
 
          log.info("MqspringApplication starts...");
-         SpringApplication.run(MqspringApplication.class, args);
+         SpringApplication.run(MQSpringApplication.class, args);
      }
 
     @Bean
@@ -126,7 +132,7 @@ public class MqspringApplication {
         container.setDestinationName(queueName);
         //container.setMessageListener(new MqListener());
         log.info("messageProducer = {}", messageProducer);
-        container.setMessageListener(new MqListener(messageProducer));
+        container.setMessageListener(new WebsphereMQListener(messageProducer, avroProducer));
         return container;
     }
 
